@@ -1,0 +1,27 @@
+package com.example.demo.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
+
+@Configuration
+@EnableWebSecurity
+public class WebSecurityConfig extends WebSecurityConfiguration {
+	 
+	@Autowired
+	    private JwtRequestFilter jwtRequestFilter;
+
+	    @Override
+	    protected void configure(HttpSecurity http) throws Exception {
+	        http.csrf().disable()
+	            .authorizeRequests()
+	            .antMatchers("/api/authenticate").permitAll()
+	            .anyRequest().authenticated()
+	            .and()
+	            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+	    }
+
+	    @Bean
+	    public JwtRequestFilter jwtRequestFilter() {
+	        return new JwtRequestFilter();
+	    }
+	}

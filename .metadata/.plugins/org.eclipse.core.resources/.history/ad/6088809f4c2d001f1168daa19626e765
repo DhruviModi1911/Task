@@ -1,0 +1,26 @@
+package com.example.demo.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.util.JwtUtil;
+
+@RestController
+@RequestMapping("/api")
+public class AuthenticationController {
+
+	@Autowired
+    private JwtUtil jwtUtil;
+
+    @GetMapping("/generate-token")
+    public ResponseEntity<?> generateToken(@RequestParam String username) {
+        // Generate JWT token using JwtUtil
+        String token = jwtUtil.createToken(username);
+        
+        // Return the token in the response
+        return ResponseEntity.ok(new JwtResponse(token));
+    }
+}
