@@ -35,10 +35,15 @@ public class JwtUtil {
     }
 
     public String getUsernameFromToken(String token) {
-        return Jwts.parser()
-                .setSigningKey(secretKey)
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+        try {
+            System.out.println("Token received: " + token); 
+            Jws<Claims> claims = Jwts.parser()
+                    .setSigningKey(secretKey)
+                    .parseClaimsJws(token);
+            return claims.getBody().getSubject();
+        } catch (Exception e) {
+            e.printStackTrace(); 
+            return null; 
+        }
     }
 }
