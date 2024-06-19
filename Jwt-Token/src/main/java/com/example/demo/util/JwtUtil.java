@@ -9,8 +9,8 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    private String secretKey = "mySecretKey"; // Replace with your secret key
-    private long validityInMilliseconds = 30000; // 1 hour
+    private String secretKey = "mySecretKey"; 
+    private long validityInMilliseconds = 30000; 
 
     public String createToken(String username) {
         Claims claims = Jwts.claims().setSubject(username);
